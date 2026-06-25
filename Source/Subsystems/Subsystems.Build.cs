@@ -9,7 +9,7 @@ public class Subsystems : ModuleRules
         PublicDependencyModuleNames.AddRange(
             new string[]
             {
-                "Core",
+                "Core", "SharedDatas",
             }
         );
 

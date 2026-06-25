@@ -3,38 +3,9 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "GridDatas.h"
 #include "Subsystems/WorldSubsystem.h"
 #include "GridSubsystem.generated.h"
-
-/**
- * 
- */
-
-USTRUCT()
-struct FGridCell
-{
-	GENERATED_BODY()
-	UPROPERTY()
-	int32 CellID;
-	UPROPERTY()
-	FIntPoint Coordinates;
-	
-	FGridCell() = default;
-	FGridCell(int32 CellID, FIntPoint Coordinates) : 
-		CellID(CellID), Coordinates(Coordinates) {}
-	
-	int32 GetCellID()
-	{
-		return CellID; 
-	}
-	
-	FIntPoint GetCoordinates()
-	{
-		return Coordinates;
-	}
-	
-};
-
 
 UCLASS()
 class SUBSYSTEMS_API UGridSubsystem : public UWorldSubsystem
@@ -46,12 +17,18 @@ public:
 	
 	UFUNCTION()
 	void ComputeGrid();
+	FGridCell* GetCellByLocation(const FVector& WorldLocation);
 	
+	UFUNCTION()
+	static FVector GetLocationByCell(const FGridCell& Cell);
+
 private:
 	UPROPERTY()
 	int CellsXCount;
 	UPROPERTY()
 	int CellsYCount;
 	UPROPERTY()
-	TArray<FIntPoint> Cells;
+	FGrid Grid;
+	UPROPERTY()
+	TMap<FIntPoint, FGridCell> OccupiedCells;
 };

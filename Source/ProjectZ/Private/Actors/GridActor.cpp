@@ -3,6 +3,8 @@
 
 #include "ProjectZ/Public/Actors/GridActor.h"
 
+#include "GridSubsystem.h"
+
 
 // Sets default values
 AGridActor::AGridActor()
@@ -15,6 +17,14 @@ AGridActor::AGridActor()
 void AGridActor::BeginPlay()
 {
 	Super::BeginPlay();
+	if (GetWorld())
+	{
+		UGridSubsystem* GridSubSystem = GetWorld()->GetSubsystem<UGridSubsystem>();
+		if (GridSubSystem)
+		{
+			GridSubSystem->ComputeGrid();
+		}
+	}
 	
 }
 
